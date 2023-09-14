@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+
+  h4.mt-4= title
+  form(method='POST' action='/add_news')
+    .form-group
+      .input-group-prepend  
+        span.input-group-text Date
+        input#date.form-control(type='date' name='date' value=today required='true')
+    .form-group
+      label(for='summary') Summary:
+      textarea#summary.form-control(type='textarea' rows=3 placeholder='summary...' name='summary' required='true') 
+    .form-group
+      .input-group-prepend
+        span.input-group-text Image URL
+        input#imgUrl.form-control(type='text' placeholder='https://example.com/...' name='imgUrl' required='true') 
+    .form-group
+      label(for='content') Content:
+      textarea#content.form-control(type='textarea', rows=8, placeholder='content...' name='content' required='true') 
+    div.text-center
+      button.btn.btn-primary(type='submit') Submit
+
+if errors
+  ul
+    for error in errors
+      li!= error.msg
