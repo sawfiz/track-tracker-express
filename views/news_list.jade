@@ -1,17 +1,17 @@
-extends layout 
+extends layout
 
-block content 
+block content
  .container.mt-4.px-0
-    each news in news_list 
-      .card.border-secondary.mb-3 
+    each news in news_list
+      .card.border-secondary.mb-3
         .card-header #{news.date_yyyy_mm_dd}
-        .card-body 
-          .row 
+        .card-body
+          .row
             .col-4.px-0
               img.img-thumbnail(src=news.imgUrl, alt='Image', style="max-width:100%;")
             .col.px-2
-              .text-secondary 
-                a(href=news.url) #{news.summary}  
+              .text-secondary
+                a(href=news.url) #{news.heading}
 
-  form(action='' method='POST')
-    button.btn.btn-primary Add News
+    button.btn.btn-primary
+      a(href='/news/create') Add News

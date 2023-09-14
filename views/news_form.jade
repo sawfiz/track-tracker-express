@@ -3,13 +3,13 @@ extends layout
 block content
 
   h4.mt-4= title
-  form(method='POST' action='/add_news')
+  form(method='POST' action='')
     .form-group
       .input-group-prepend
         span.input-group-text Date
         input#date.form-control(type='date' name='date' value=today required='true')
     .form-group
-      textarea.form-control(rows=3 placeholder='News heading...' name='summary' required='true')
+      textarea.form-control(rows=3 placeholder='News heading...' name='heading' required='true')
     .form-group
       .input-group-prepend
         span.input-group-text Image URL
