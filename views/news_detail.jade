@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+  .container.mt-4.px-0 
+    .card.border-secondary.mb-3 
+      .card-header 
+        h5= news.summary 
+        .text-secondary #{news.date_yyyy_mm_dd}
+      img.m-1(src=news.imgUrl)
+      .card-body  
+        .text-secondary #{news.content}
+

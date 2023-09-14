@@ -15,6 +15,11 @@ schema.virtual("date_yyyy_mm_dd").get(function () {
   return this.date ? DateTime.fromJSDate(this.date).toISODate() : '';
 });
 
+// Virtual propety news_url
+schema.virtual("url").get(function () {
+  return `/news/${this._id}`;
+});
+
 const News = mongoose.model('News', schema)
 
 module.exports = News;
