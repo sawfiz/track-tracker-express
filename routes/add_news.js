@@ -13,9 +13,9 @@ router.post('/', asyncHandler(async(req, res, next) => {
     imgUrl: req.body.imgUrl,
     content: req.body.content
   })
-  console.log("🚀 ~ file: add_news.js:12 ~ router.post ~ news:", news)
   
   await news.save();
+  res.redirect('/news')
 
 }))
 
