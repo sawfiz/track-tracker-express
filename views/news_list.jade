@@ -10,8 +10,8 @@ block content
             .col-4.px-0
               img.img-thumbnail(src=news.imgUrl, alt='Image', style="max-width:100%;")
             .col.px-2
-              .text-secondary
-                a(href=news.url) #{news.heading}
+              .text-dark
+                a(href=news.url, style='text-decoration: none; color: inherit;') #{news.heading}
 
-    button.btn.btn-primary
-      a(href='/news/create') Add News
+    button.btn.btn-dark
+      a(href='/news/create', style='text-decoration: none; color: inherit;') Add News

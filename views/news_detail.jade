@@ -1,12 +1,23 @@
-extends layout 
+extends layout
 
-block content 
-  .container.mt-4.px-0 
-    .card.border-secondary.mb-3 
-      .card-header 
-        h5= news.summary 
+block content
+  .container.mt-4.px-0
+    .card.border-secondary.mb-3
+      .card-header
+        h5= news.summary
         .text-secondary #{news.date_yyyy_mm_dd}
       img.m-1(src=news.imgUrl)
-      .card-body  
+      .card-body
         .text-secondary #{news.content}
 
+    .row
+      .col
+        div.d-flex.justify-content-center
+          button.btn-warning
+            a(href=news.url+'/update', style='text-decoration: none; color: inherit;')
+              | Update
+      .col
+        div.d-flex.justify-content-center
+          button.btn-danger
+            a(href=news.url+'/delete', style='text-decoration: none; color: inherit;')
+              | Delete

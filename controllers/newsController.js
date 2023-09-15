@@ -11,15 +11,14 @@ exports.news_list_get = asyncHandler(async (req, res, next) => {
   res.render('news_list', { news_list: allNews });
 });
 
-// Render Add News form
+// Display news create form on GET
 exports.create_news_get = function (req, res, next) {
   const today = DateTime.fromJSDate(new Date()).toISODate();
   res.render('news_form', { title: 'Add News', today });
 };
 
-// Create news in database
+// Handle book create on POST
 exports.create_news_post = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   const news = new News({
     date: req.body.date,
     heading: req.body.heading,
@@ -27,20 +26,46 @@ exports.create_news_post = asyncHandler(async (req, res, next) => {
     content: req.body.content,
     publish: req.body.publish === 'on',
   });
-  console.log(
-    '🚀 ~ file: newsController.js:29 ~ exports.create_news_post=asyncHandler ~ news:',
-    news
-  );
-
   await news.save();
   res.redirect('/news');
 });
 
-// router.get('/:id', asyncHandler(async (req, res, next) => {
-//   const news = await News.findById(req.params.id).exec()
-//   console.log("🚀 ~ file: news.js:21 ~ router.get ~ news:", news)
+// Display detail page for a specific news item
+exports.read_news_get = asyncHandler(async (req, res, next) => {
+  const news = await News.findById(req.params.id).exec()
+  res.render('news_detail', {news})
+})
 
-//   res.render('news_detail', {news: news})
-// }))
+// Display news update form on GET
+exports.update_news_get = asyncHandler(async(req, res, next) => {
 
-// module.exports = router;
+  // Get the news from database
+  const news = await News.findById(req.params.id).exec()
+
+  if (news === null) {
+    // No results.
+    const err = new Error("Book not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("news_form", {
+    title: "Update News",
+    news,
+  })
+})
+
+// Handle news update form on POST
+exports.update_news_post = (req, res, next) => {
+  res.send("Not implement yet")
+}
+
+// Display news delete form on GET
+exports.delete_news_get = (req, res, next) => {
+  res.send("Not implement yet")
+}
+
+// Handle news delete form on POST
+exports.delete_news_post = (req, res, next) => {
+  res.send("Not implement yet")
+}

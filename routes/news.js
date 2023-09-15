@@ -4,36 +4,34 @@ const router = express.Router();
 // Require the controller module
 const news_controller = require('../controllers/newsController');
 
+const validateObjectId = require('../utils/objectIdValidator');
+
+
 /// NEWS ROUTES
 
 // GET pubished news list
 router.get('/', news_controller.news_list_get);
 
-// GET handle Add News button in the news list page
+// GET request for creating a news item
 router.get('/create', news_controller.create_news_get);
 
-// POST create news in database
+// POST request for creating a news item
 router.post('/create', news_controller.create_news_post)
 
-// router.get('/', asyncHandler(async (req, res, next) => {
-//   const allNews = await News.find().sort({date: 1}).exec()
-//   res.render('news_list', {news_list: allNews})
-// }))
+// GET request for one news item
+router.get('/:id', validateObjectId, news_controller.read_news_get)
 
-// POST to add news
-// router.post('/', function (req, res, next) {
-//   const today = DateTime.fromJSDate(new Date()).toISODate();
-//   res.render('news_form', { title: 'Add News', today });
-// });
 
-// router.get(
-//   '/:id',
-//   asyncHandler(async (req, res, next) => {
-//     const news = await News.findById(req.params.id).exec();
-//     console.log('🚀 ~ file: news.js:21 ~ router.get ~ news:', news);
+// GET request to update news.
+router.get("/:id/update", validateObjectId, news_controller.update_news_get);
 
-//     res.render('news_detail', { news: news });
-//   })
-// );
+// POST request to update news.
+router.post("/:id/update", validateObjectId, news_controller.update_news_post);
+
+// GET request to delete news.
+router.get("/:id/delete", validateObjectId, news_controller.delete_news_get);
+
+// POST request to delete news.
+router.post("/:id/delete", validateObjectId, news_controller.delete_news_post);
 
 module.exports = router;

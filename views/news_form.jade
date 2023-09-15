@@ -7,17 +7,29 @@ block content
     .form-group
       .input-group-prepend
         span.input-group-text Date
-        input#date.form-control(type='date' name='date' value=today required='true')
+        input#date.form-control(type='date' name='date'
+          value=(news && news.date_yyyy_mm_dd)
+          required='true')
     .form-group
-      textarea.form-control(rows=3 placeholder='News heading...' name='heading' required='true')
+      textarea.form-control(name='heading' rows=3
+        placeholder='News heading...'
+        required='true')
+        | #{news && news.heading}
     .form-group
       .input-group-prepend
         span.input-group-text Image URL
-        input#imgUrl.form-control(type='text' placeholder='https://example.com/...' name='imgUrl')
+        input#imgUrl.form-control(type='text' name='imgUrl'
+        placeholder='https://example.com/...'
+        value=(news && news.imgUrl)
+        )
     .form-group
-      textarea.form-control(rows=8 placeholder='News content...' name='content' required='true')
+      textarea.form-control(name='content' rows=8
+        placeholder='News content...'
+        required='true')
+        | #{news && news.content}
     .form-check
-      input.form-check-input(type='checkbox' name="publish")
+      input.form-check-input(type='checkbox' name="publish"
+        checked=(news===undefined ? false : news.publish))
       label.form-check-label(for="publish") Publish
     div.text-center
       button.btn.btn-primary.mt-2(type='submit') Submit
