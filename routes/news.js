@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Require the controller module
-const news_controller = require('../controllers/newsController');
-
 const validateObjectId = require('../utils/objectIdValidator');
 
+// Require the controller module
+const news_controller = require('../controllers/newsController');
 
 /// NEWS ROUTES
 
