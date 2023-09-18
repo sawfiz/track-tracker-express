@@ -7,7 +7,7 @@ const schema = new Schema({
   date: {type: Date},
   heading: {type: String, required: true, maxLength: 100},
   content: {type: String, required: true, maxLength: 2000},
-  imgUrl: {type: String, required: true, maxLength: 200},
+  imgUrl: {type: String, maxLength: 200},
   publish: {type: Boolean}
 })
 

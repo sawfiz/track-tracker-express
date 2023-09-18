@@ -6,8 +6,9 @@ const News = require('../models/news');
 
 // Display all published news
 exports.news_list_get = asyncHandler(async (req, res, next) => {
-  const allNews = await News.find({ publish: true }).sort({ date: 1 }).exec();
-  res.render('news_list', { news_list: allNews });
+  // Dispaly all news, both published and unpublished
+  const allNews = await News.find().sort({ date: -1 }).exec();
+  res.render('news_list', { news_list: allNews, admin: true });
 });
 
 // Display news create form on GET
@@ -29,9 +30,12 @@ exports.create_news_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('imgUrl', 'Not a valid URL').optional().trim().isURL(),
-  body('date', 'Date must not be empty').isEmpty(),
-  body('publish', 'Publish must not be empty').isEmpty(),
+  body('imgUrl', 'Not a valid URL')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isURL(),
+  // body('date', 'Date must not be empty').notEmpty(),
+  // body('publish', 'Publish must not be empty').isEmpty(),
 
   asyncHandler(async (req, res, next) => {
     console.log(req.body);
@@ -48,7 +52,7 @@ exports.create_news_post = [
     if (!errors.isEmpty()) {
       res.render('news_form', {
         title: 'Add News',
-        news,
+        news: news,
         errors: errors.array(),
       });
     } else {
@@ -95,13 +99,37 @@ exports.update_news_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body('imgUrl', 'Not a valid URL').optional().trim().isURL(),
-  body('date', 'Date must not be empty').isEmpty(),
-  body('publish', 'Publish must not be empty').isEmpty(),
+  body('imgUrl', 'Not a valid URL')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isURL(),
+  body('date', 'Date must not be empty').notEmpty(),
+  // body('publish', 'Publish must not be empty').isEmpty(),
 
-  (req, res, next) => {
-    res.send('Not implement yet');
-  },
+  asyncHandler(async (req, res, next) => {
+    console.log(req.body);
+    const errors = validationResult(req);
+
+    const news = new News({
+      date: req.body.date,
+      heading: req.body.heading,
+      imgUrl: req.body.imgUrl,
+      content: req.body.content,
+      publish: req.body.publish === 'on',
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render('news_form', {
+        title: 'Update News',
+        news: news,
+        errors: errors.array(),
+      });
+    } else {
+      const updateNews = await News.findByIdAndUpdate(req.params.id, news, {})
+      res.redirect('/news');
+    }
+  }),
 ];
 
 // Display news delete form on GET
