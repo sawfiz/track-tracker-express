@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 
 const News = require('../models/news');
 
-// Display all published news
+// Display all news items
 exports.news_list_get = asyncHandler(async (req, res, next) => {
   // Dispaly all news, both published and unpublished
   const allNews = await News.find().sort({ date: -1 }).exec();
