@@ -126,18 +126,32 @@ exports.update_news_post = [
         errors: errors.array(),
       });
     } else {
-      const updateNews = await News.findByIdAndUpdate(req.params.id, news, {})
+      const updateNews = await News.findByIdAndUpdate(req.params.id, news, {});
       res.redirect('/news');
     }
   }),
 ];
 
 // Display news delete form on GET
-exports.delete_news_get = (req, res, next) => {
-  res.send('Not implement yet');
-};
+exports.delete_news_get = asyncHandler(async (req, res, next) => {
+  const news = await News.findById(req.params.id).exec();
+
+  if (news === null) {
+    res.redirect('/news');
+  }
+
+  res.render('news_delete', {
+    title: 'Delete News',
+    news,
+  });
+});
 
 // Handle news delete form on POST
-exports.delete_news_post = (req, res, next) => {
-  res.send('Not implement yet');
-};
+exports.delete_news_post = asyncHandler(async (req, res, next) => {
+  const news = await News.findById(req.params.id).exec()
+
+  if (news) {
+    await News.findByIdAndRemove(req.params.id)
+    res.redirect('/news')
+  }
+});

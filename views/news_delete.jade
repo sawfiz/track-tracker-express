@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h4.mt-4= title
+
+  p Do you really want to delete this news?
+
+    form(method='POST' action='')
+      button.btn.btn-danger(type='submit') Delete
