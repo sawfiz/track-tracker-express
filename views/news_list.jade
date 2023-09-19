@@ -1,20 +1,23 @@
 extends layout
 
 block content
- .container.mt-4.px-0
-    each news in news_list
-      - const cardClasses = news.publish ? 'card text-white bg-secondary mb-3' : 'card border-danger mb-3'
-      div(class="#{cardClasses}")
-        .card-header #{news.date_yyyy_mm_dd}
-        .card-body
-          .row
-            .col-4.px-0
-              img.img-thumbnail(src=news.imgUrl, alt='Image', style="max-width:100%;")
-            .col-8.px-2
-              .card-text
-                a(href=news.url, style='text-decoration: none; color: inherit;') #{news.heading}
+  if user
+    p Welcome back, #{user.username}
 
-    //- Only show the button if rendering for News
-    if admin
-      button.btn.btn-dark
-        a(href='/news/create', style='text-decoration: none; color: inherit;') Add News
+  .container.mt-4.px-0
+      each news in news_list
+        - const cardClasses = news.publish ? 'card text-white bg-secondary mb-3' : 'card border-danger mb-3'
+        div(class="#{cardClasses}")
+          .card-header #{news.date_yyyy_mm_dd}
+          .card-body
+            .row
+              .col-4.px-0
+                img.img-thumbnail(src=news.imgUrl, alt='Image', style="max-width:100%;")
+              .col-8.px-2
+                .card-text
+                  a(href=news.url, style='text-decoration: none; color: inherit;') #{news.heading}
+
+  //- Only show the button if rendering for News
+  if admin
+    button.btn.btn-dark
+      a(href='/news/create', style='text-decoration: none; color: inherit;') Add News

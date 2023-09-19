@@ -8,7 +8,8 @@ const News = require('../models/news');
 exports.news_list_get = asyncHandler(async (req, res, next) => {
   // Dispaly all news, both published and unpublished
   const allNews = await News.find().sort({ date: -1 }).exec();
-  res.render('news_list', { news_list: allNews, admin: true });
+  console.log("🚀 ~ file: newsController.js:11 ~ exports.news_list_get=asyncHandler ~ allNews:", allNews)
+  res.render('news_list', { news_list: allNews, user: req.user, admin: true });
 });
 
 // Display news create form on GET
