@@ -3,8 +3,6 @@ const News = require('../models/news');
 const User = require('../models/user');
 
 const passport = require('passport')
-
-const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 
 // Display all published news items
@@ -16,15 +14,18 @@ exports.news_list_get = asyncHandler(async (req, res, next) => {
 
 // Display login on GET
 exports.login_get = (req, res, next) => {
-  console.log(req.session.messages);
-  res.render('login', { title: 'Log In', message: req.session.messages });
+  const message = req.flash('error')
+  res.render('login', { title: 'Log In', message });
 };
 
 // Handle login on POST
-exports.login_post = passport.authenticate('local', {
+exports.login_post = (req, res, next) => {
+  passport.authenticate('local', {
     successRedirect: '/news',
     failureRedirect: '/login',
-  });
+    failureFlash: true,
+  })(req, res, next)
+};
 
 
 // Display signup on GET

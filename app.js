@@ -10,6 +10,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index');
 const newsRouter = require('./routes/news')
@@ -22,7 +23,7 @@ const app = express();
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
@@ -52,6 +53,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure flash messages
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/news', newsRouter);
